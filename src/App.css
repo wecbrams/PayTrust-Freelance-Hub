@@ -1,0 +1,42 @@
+/* App.css */
+
+.navbar {
+  background-color: #004d99; /* Dark blue background */
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+}
+
+.navbar li {
+  margin: 0 10px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  color: #ffcc00; /* Gold color on hover */
+}
+
+.navbar button {
+  background-color: #ffcc00; /* Gold background */
+  color: #004d99; /* Dark blue text */
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.navbar button:hover {
+  background-color: #ffd633; /* Lighter gold on hover */
+}
