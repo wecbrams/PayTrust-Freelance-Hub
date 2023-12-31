@@ -9,7 +9,7 @@
 
 PayTrust Freelance Hub is a decentralized application (DApp) designed to address the challenges faced by freelancers, especially in regions like Tunisia. The platform ensures secure and transparent transactions between clients and freelancers, tackling issues such as delayed payments and dissatisfaction with delivered work.
 
-Live demo [here](https://foodiz-near.netlify.app/)
+Live demo [here](https://chahtourala.github.io/PayTrust-Freelance-Hub/)
 
 <!-- GETTING STARTED -->
 
