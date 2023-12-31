@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/ChahtourAla/PayTrust-Freelance-Hub/tree/master/static/css/main.6b60cd6c.css",
-    "main.js": "/ChahtourAla/PayTrust-Freelance-Hub/tree/master/static/js/main.552e74fb.js",
-    "index.html": "/ChahtourAla/PayTrust-Freelance-Hub/tree/master/index.html",
-    "main.6b60cd6c.css.map": "/ChahtourAla/PayTrust-Freelance-Hub/tree/master/static/css/main.6b60cd6c.css.map",
-    "main.552e74fb.js.map": "/ChahtourAla/PayTrust-Freelance-Hub/tree/master/static/js/main.552e74fb.js.map"
+    "main.css": "/PayTrust-Freelance-Hub/static/css/main.6b60cd6c.css",
+    "main.js": "/PayTrust-Freelance-Hub/static/js/main.2ba678ec.js",
+    "index.html": "/PayTrust-Freelance-Hub/index.html",
+    "main.6b60cd6c.css.map": "/PayTrust-Freelance-Hub/static/css/main.6b60cd6c.css.map",
+    "main.2ba678ec.js.map": "/PayTrust-Freelance-Hub/static/js/main.2ba678ec.js.map"
   },
   "entrypoints": [
     "static/css/main.6b60cd6c.css",
-    "static/js/main.552e74fb.js"
+    "static/js/main.2ba678ec.js"
   ]
 }
