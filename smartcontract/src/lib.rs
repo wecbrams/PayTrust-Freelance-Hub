@@ -98,16 +98,30 @@ impl Contracts {
         self.listed_contracts.insert(&contract_id, &contract);
     }
 
-    pub fn report_accept_contract(&mut self, contract_id: String) {
-        let mut contract = self.listed_contracts.get(&contract_id).unwrap();
-        assert_eq!(env::predecessor_account_id(), contract.client,"this function should be executed only by the client!!");
-        assert_eq!(contract.status,"Waiting for the Freelancer's Acceptance".to_string());
-        assert!(env::block_timestamp() > contract.time + 86400,"to make an acceptance contract report you need to wait 24 hours after the time of the creation of the contract");
-        Promise::new(env::predecessor_account_id()).transfer(contract.amount*YNEAR);
-        contract.update_status("Contract deprected".to_string());
-        self.listed_contracts.insert(&contract_id, &contract);
-    }
+    pub fn report_accept_contract(&mut self, contract_id: String) -> Result<(), String> {
+        if let Some(mut contract) = self.listed_contracts.get(&contract_id) {
+            if contract.client != env::predecessor_account_id() {
+                return Err("This function should be executed only by the client!".to_string());
+            }
 
+            if contract.status != "Waiting for the Freelancer's Acceptance" {
+                return Err("Contract status is not Waiting for the Freelancer's Acceptance".to_string());
+            }
+
+            if env::block_timestamp() <= contract.time + 86400 {
+                return Err("To make an acceptance contract report, you need to wait 24 hours after the time of the creation of the contract".to_string());
+            }
+
+            Promise::new(env::predecessor_account_id()).transfer(contract.amount * YNEAR);
+            contract.update_status("Contract deprecated".to_string());
+            self.listed_contracts.insert(&contract_id, &contract);
+
+            Ok(())
+        } else {
+            Err("Contract not found".to_string())
+        }
+    }
+    
     pub fn reject_contract(&mut self, contract_id: String, info: String) {
         let mut contract = self.listed_contracts.get(&contract_id).unwrap();
         assert_eq!(env::predecessor_account_id(),contract.freelancer,"this function should be executed only by the freelancer!!");
@@ -179,28 +193,31 @@ impl Contracts {
         return self.black_list.values_as_vector().to_vec();
     }
 
-    pub fn get_contract_by_id(&self, contract_id: String) -> Contract {
-        return self.listed_contracts.get(&contract_id).unwrap();
+    pub fn get_contract_by_id(&self, contract_id: String) -> Option<Contract> {
+        self.listed_contracts.get(&contract_id).cloned()
     }
 
-    pub fn get_contracts_per_client(&self, account_id: String) -> Vec<Contract>{
+    fn get_contracts_by_account(&self, account_id: &str, is_client: bool) -> Vec<Contract> {
         let mut res = Vec::new();
-        for i in 0..self.listed_contracts.values_as_vector().len() {
-            if self.listed_contracts.values_as_vector().get(i).unwrap().client == account_id {
-                res.push(self.listed_contracts.values_as_vector().get(i).unwrap())
+        for contract in self.listed_contracts.values_as_vector() {
+            let is_match = if is_client {
+                contract.client == account_id
+            } else {
+                contract.freelancer == account_id
+            };
+            if is_match {
+                res.push(contract);
             }
         }
-        return res;
+        res
     }
 
-    pub fn get_contracts_per_freelancer(&self, account_id: String) -> Vec<Contract>{
-        let mut res = Vec::new();
-        for i in 0..self.listed_contracts.values_as_vector().len() {
-            if self.listed_contracts.values_as_vector().get(i).unwrap().freelancer == account_id {
-                res.push(self.listed_contracts.values_as_vector().get(i).unwrap())
-            }
-        }
-        return res;
+    pub fn get_contracts_per_client(&self, account_id: String) -> Vec<Contract> {
+        self.get_contracts_by_account(&account_id, true)
+    }
+
+    pub fn get_contracts_per_freelancer(&self, account_id: String) -> Vec<Contract> {
+        self.get_contracts_by_account(&account_id, false)
     }
 
 }
