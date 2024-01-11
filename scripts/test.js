@@ -1,6 +1,5 @@
 'use strict';
-
-// Do this as the first thing so that any code reading it knows the right env.
+// Set test environment variables
 process.env.BABEL_ENV = 'test';
 process.env.NODE_ENV = 'test';
 process.env.PUBLIC_URL = '';
@@ -8,6 +7,8 @@ process.env.PUBLIC_URL = '';
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
+
+// Crash on unhandled rejections
 process.on('unhandledRejection', err => {
   throw err;
 });
@@ -48,5 +49,21 @@ if (
   argv.push(hasSourceControl ? '--watch' : '--watchAll');
 }
 
+// Ensure that the test suite covers a sufficient number of scenarios.
+
+// Example:
+// Test Suite Improvement: Add more test cases to cover edge cases and different scenarios.
+test('calculateTotalPayment function', () => {
+  // Test case 1: Regular scenario
+  expect(calculateTotalPayment(20, 10, 0, 0)).toBe(200);
+
+  // Test case 2: With bonuses
+  expect(calculateTotalPayment(20, 10, 50, 0)).toBe(250);
+
+  // Test case 3: With deductions
+  expect(calculateTotalPayment(20, 10, 0, 30)).toBe(170);
+
+  // ... add more test cases ...
+});
 
 jest.run(argv);
